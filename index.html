@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signage Lite</title>
+  <link rel="stylesheet" href="/src/control.css" />
+</head>
+<body>
+  <main id="app">
+    <h1>Signage Lite</h1>
+
+    <details class="acc">
+      <summary>Identitas</summary>
+      <div class="acc-body">
+        <label>Nama instansi
+          <input type="text" data-key="orgName" placeholder="mis. UPT BKN Semarang" />
+        </label>
+        <div class="item">
+          <img id="logoPreview" alt="" hidden />
+          <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml" />
+          <button type="button" id="logoClear">Hapus logo</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>Clock</summary>
+      <div class="acc-body">
+        <label class="check"><input type="checkbox" data-key="showClock" /> Tampilkan jam</label>
+        <label>Ukuran jam (%) <input type="number" min="30" max="300" step="10" data-key="sizeClock" /></label>
+        <label>Font jam <select data-key="fontClock" class="fontSel"></select></label>
+        <div class="grid2">
+          <label>Zona waktu
+            <select data-key="tz">
+            <option value="Asia/Jakarta">WIB (Jakarta)</option>
+            <option value="Asia/Makassar">WITA (Makassar)</option>
+            <option value="Asia/Jayapura">WIT (Jayapura)</option>
+          </select>
+        </label>
+        <label>Format jam
+          <select data-key="hour12" data-bool>
+            <option value="false">24 jam</option>
+            <option value="true">12 jam (AM/PM)</option>
+          </select>
+        </label>
+      </div>
+      <label class="check"><input type="checkbox" data-key="showSeconds" /> Tampilkan detik</label>
+      <label class="check"><input type="checkbox" data-key="showTzLabel" /> Tampilkan label zona (WIB/WITA/WIT)</label>
+    </div>
+    </details>
+
+    <details class="acc">
+      <summary>Tanggal</summary>
+      <div class="acc-body">
+        <label class="check"><input type="checkbox" data-key="showDate" /> Tampilkan tanggal</label>
+        <label>Ukuran tanggal (%) <input type="number" min="30" max="300" step="10" data-key="sizeDate" /></label>
+        <label>Font tanggal <select data-key="fontDate" class="fontSel"></select></label>
+        <label>Format tanggal
+          <select data-key="dateFormat" id="dateFormat"></select>
+        </label>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>Cards (1-4)</summary>
+      <div class="acc-body">
+        <label>Font card <select data-key="fontCard" class="fontSel"></select></label>
+        <div id="cards"></div>
+        <button type="button" id="addCard">+ Tambah card</button>
+        <div class="grid2">
+          <label>Ukuran judul card (%) <input type="number" min="30" max="300" step="10" data-key="sizeCardTitle" /></label>
+          <label>Ukuran isi card (%) <input type="number" min="30" max="100" step="10" data-key="sizeCardBody" /></label>
+          <label>Lebar area card (%) <input type="number" min="30" max="100" step="5" data-key="cardW" /></label>
+          <label>Tinggi area card (%) <input type="number" min="30" max="100" step="5" data-key="cardH" /></label>
+        </div>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>Running text</summary>
+      <div class="acc-body">
+        <label>Ukuran running text (%) <input type="number" min="30" max="300" step="10" data-key="sizeTicker" /></label>
+        <label>Font running text <select data-key="fontTicker" class="fontSel"></select></label>
+        <div id="ticker"></div>
+        <button type="button" id="addTicker">+ Tambah kalimat</button>
+        <label>Durasi fade (ms)
+          <input type="number" min="100" max="5000" step="100" data-key="tickerFade" />
+        </label>
+      </div>
+    </details>
+
+    <details class="acc" open>
+      <summary>Preview <button type="button" id="updatePreview">Update preview</button></summary>
+      <div class="acc-body">
+        <div id="previewWrap"><iframe id="preview" src="/display.html?preview=1"></iframe></div>
+      </div>
+    </details>
+  </main>
+
+  <footer>
+    <p id="msg"></p>
+    <button type="button" id="show" class="primary">Tampilkan</button>
+  </footer>
+
+  <script type="module" src="/src/control.js"></script>
+</body>
+</html>

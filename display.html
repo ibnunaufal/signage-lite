@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signage</title>
+  <link rel="stylesheet" href="/src/display.css" />
+</head>
+<body class="idle">
+  <div id="stage">
+    <header>
+      <div id="brand"><img id="logo" alt="" /><span id="org"></span></div>
+      <div id="clockbox"><div id="clock"></div><div id="date"></div></div>
+      <button id="exit" type="button" title="Keluar (Esc)">✕ Keluar</button>
+    </header>
+    <main id="cards"></main>
+    <footer id="tickerbox"><div id="ticker"></div></footer>
+  </div>
+  <script type="module" src="/src/display.js"></script>
+</body>
+</html>

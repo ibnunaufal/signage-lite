@@ -1,0 +1,38 @@
+:root { --bg:#0f1624; --panel:#18223a; --line:#2a3a5e; --tx:#e8eefc; --mut:#9bacce; --acc:#ffd23f; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--tx); font:14px/1.4 "Segoe UI", system-ui, sans-serif; }
+#app { padding:16px 16px 110px; }
+h1 { font-size:20px; margin:0 0 12px; }
+details.acc { background:var(--panel); border:1px solid var(--line); border-radius:8px; margin-bottom:12px; }
+details.acc > summary { display:flex; align-items:center; padding:12px; cursor:pointer; font-weight:600; list-style:none; }
+details.acc > summary::-webkit-details-marker { display:none; }
+details.acc > summary::after { content:"▸"; color:var(--mut); margin-left:10px; transition:transform .15s; }
+details.acc[open] > summary::after { transform:rotate(90deg); }
+details.acc > summary button { margin-left:auto; font-size:12px; padding:4px 10px; }
+.acc-body { padding:0 12px 12px; }
+label { display:block; font-size:12px; color:var(--mut); margin-bottom:8px; }
+input[type=text], input[type=number], select {
+  width:100%; padding:7px 9px; margin-top:3px; background:#0d1426; color:var(--tx);
+  border:1px solid var(--line); border-radius:6px; font:inherit;
+}
+input:focus, select:focus, button:focus-visible { outline:2px solid var(--acc); outline-offset:1px; }
+.check { display:flex; align-items:center; gap:8px; color:var(--tx); font-size:14px; }
+.check input { width:auto; margin:0; accent-color:var(--acc); }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 10px; margin-top:8px; }
+.item { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+.item input[type=text] { margin:0; flex:1; }
+.card-item { border:1px solid var(--line); border-radius:8px; padding:8px; margin-bottom:8px; }
+.card-item input[type=text] { margin:0 0 6px; }
+.card-item .item { margin:0; justify-content:flex-end; }
+button { background:#22305100; background:#223051; color:var(--tx); border:1px solid var(--line); border-radius:6px; padding:6px 10px; font:inherit; cursor:pointer; }
+button:hover:not(:disabled) { background:#2c3d66; }
+button:disabled { opacity:.4; cursor:default; }
+button.icon { padding:6px 9px; }
+#logoPreview { height:36px; max-width:80px; object-fit:contain; background:#0d1426; border-radius:4px; }
+#logoFile { width:auto; flex:1; min-width:0; font-size:12px; }
+footer { position:fixed; left:0; right:0; bottom:0; padding:10px 16px 14px; background:var(--bg); border-top:1px solid var(--line); }
+#msg { margin:0 0 6px; min-height:1.2em; color:#ff8a80; font-size:13px; }
+button.primary { width:100%; padding:12px; font-size:16px; font-weight:700; background:var(--acc); color:#0b1220; border:0; }
+button.primary:hover:not(:disabled) { background:#ffe073; }
+#previewWrap { position:relative; width:100%; overflow:hidden; border:1px solid var(--line); border-radius:6px; background:#0b1220; }
+#preview { width:1280px; height:720px; border:0; transform-origin:top left; pointer-events:none; }
