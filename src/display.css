@@ -137,6 +137,7 @@ body.idle #exit {
 }
 .card-title {
   font-size: calc(min(5vh, 2.6vw) * var(--s-title, 1));
+  text-align: center;
 }
 #cards.n1 .card-title {
   font-size: calc(min(6vh, 3vw) * var(--s-title, 1));

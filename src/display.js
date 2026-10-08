@@ -67,10 +67,12 @@ function bestSize(box) {
   }
   return lo;
 }
+function pct(v, lo, hi) {
+  return Math.min(hi, Math.max(lo, Number(v) || 100));
+}
 function fitAll() {
   const boxes = [...document.querySelectorAll('.card-body')];
   if (!boxes.length) return;
-  // ukuran seragam antar card = yang terkecil
   const k = pct(cfg.sizeCardBody, 30, 100) / 100;
   const size = Math.min(...boxes.map(bestSize)) * k;
   boxes.forEach((b) => { b.firstElementChild.style.fontSize = size + 'px'; });
