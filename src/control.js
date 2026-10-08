@@ -5,6 +5,13 @@ import { loadConfig, saveConfig, FONTS } from './common.js';
 const cfg = loadConfig();
 const $ = (s) => document.querySelector(s);
 
+$('#settingsToggle').addEventListener('click', () => {
+  const section = $('#settingSection');
+  section.hidden = !section.hidden;
+  $('#settingsToggle').setAttribute('aria-expanded', String(!section.hidden));
+  $('#settingsToggle').setAttribute('aria-label', section.hidden ? 'Buka pengaturan' : 'Tutup pengaturan');
+});
+
 // ---------- simpan otomatis + kirim live ke display ----------
 const prev = $('#preview');
 function sendPreview() {
@@ -114,11 +121,11 @@ function renderCards() {
     row.append(
       iconBtn('↑', 'Naik', () => { move(cfg.cards, i, -1); renderCards(); persist(); }, i === 0),
       iconBtn('↓', 'Turun', () => { move(cfg.cards, i, 1); renderCards(); persist(); }, i === last),
-      iconBtn('✕', 'Hapus card', () => { cfg.cards.splice(i, 1); renderCards(); persist(); }, cfg.cards.length <= 1),
+      iconBtn('✕', 'Hapus Pin Sesi', () => { cfg.cards.splice(i, 1); renderCards(); persist(); }, cfg.cards.length <= 1),
     );
     w.append(
       textInput(c.title, `Pin Sesi ${i + 1} (Nama Instansi)`, (v) => { c.title = v; persist(); }),
-      textInput(c.body, 'Isi card, mis. PIN', (v) => { c.body = v; persist(); }),
+      textInput(c.body, 'Isi Pin Sesi, mis. PIN', (v) => { c.body = v; persist(); }),
       row,
     );
     box.append(w);
@@ -201,7 +208,7 @@ $('#show').onclick = async () => {
   msg.textContent = '';
   const filled = cfg.cards.filter((c) => c.title.trim() || c.body.trim());
   if (!filled.length) {
-    msg.textContent = 'Isi minimal 1 card (judul atau isi).';
+    msg.textContent = 'Isi minimal 1 Pin Sesi (judul atau isi).';
     return;
   }
   clearTimeout(saveTimer);

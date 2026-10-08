@@ -27,7 +27,7 @@ body.idle {
 #stage {
   height: 100vh;
   width: 100vw;
-  padding: 3vh 3vw; /* safe margin overscan */
+  padding: var(--stage-padding-y, 3vh) var(--stage-padding-x, 3vw);
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 2.5vh;

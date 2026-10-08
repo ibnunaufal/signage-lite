@@ -131,6 +131,9 @@ function render() {
   rs.setProperty('--s-title', pct(cfg.sizeCardTitle, 30, 300) / 100);
   rs.setProperty('--card-w', pct(cfg.cardW, 30, 100) + '%');
   rs.setProperty('--card-h', pct(cfg.cardH, 30, 100) + '%');
+  const edgePadding = Math.min(10, Math.max(0, Number(cfg.edgePadding) || 0));
+  rs.setProperty('--stage-padding-y', edgePadding + 'vh');
+  rs.setProperty('--stage-padding-x', edgePadding + 'vw');
 
   // brand
   const logo = $('logo');
@@ -186,15 +189,18 @@ function wake() {
 addEventListener('mousemove', wake);
 wake();
 
-listen('config-updated', (e) => {
-  // cfg = normalize(e.payload);
-  // render();
+if (PREVIEW) {
   addEventListener('message', (e) => {
-  if (e.data?.type === 'config') { cfg = normalize(e.data.cfg); render(); }
+    if (e.data?.type === 'config') {
+      cfg = normalize(e.data.cfg);
+      render();
+    }
   });
-  if (!PREVIEW) {
-    listen('config-updated', (e) => { cfg = normalize(e.payload); render(); }).catch(() => {});
-  }
-}).catch(() => {});
+} else {
+  listen('config-updated', (e) => {
+    cfg = normalize(e.payload);
+    render();
+  }).catch(console.error);
+}
 
 render();

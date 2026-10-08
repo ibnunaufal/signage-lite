@@ -2,7 +2,16 @@
 * { box-sizing: border-box; }
 body { margin:0; background:var(--bg); color:var(--tx); font:14px/1.4 "Segoe UI", system-ui, sans-serif; }
 #app { padding:16px 16px 110px; }
-h1 { font-size:20px; margin:0 0 12px; }
+.app-header { position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; margin:-16px -16px 12px; padding:12px 16px; background:var(--bg); }
+h1 { font-size:20px; margin:0; }
+#settingsToggle { margin-left:auto; display:flex; align-items:center; gap:8px; min-width:42px; justify-content:center; }
+.gear-icon { font-size:18px; line-height:1; }
+.settings-chevron { width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid currentColor; transition:transform .15s; }
+#settingsToggle[aria-expanded="true"] .settings-chevron { transform:rotate(180deg); }
+#settingSection { margin-bottom:12px; }
+.settings-card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:8px 10px 2px; }
+.settings-card h2 { margin:4px 2px 10px; font-size:16px; }
+.settings-card .acc { background:transparent; }
 details.acc { background:var(--panel); border:1px solid var(--line); border-radius:8px; margin-bottom:12px; }
 details.acc > summary { display:flex; align-items:center; padding:12px; cursor:pointer; font-weight:600; list-style:none; }
 details.acc > summary::-webkit-details-marker { display:none; }

@@ -46,6 +46,7 @@ export const DEFAULTS = {
   sizeCardBody: 100,   // 100 = otomatis paling besar, turunkan untuk mengecilkan
   cardW: 100,
   cardH: 100,
+  edgePadding: 3,
 };
 
 export function normalize(raw) {

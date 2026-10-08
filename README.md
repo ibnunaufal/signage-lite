@@ -1,6 +1,6 @@
 # Signage Lite
 
-Aplikasi signage Windows ringan (Tauri v2 + vanilla JS): jam, tanggal, 1-4 card, running text fade.
+Aplikasi signage Windows ringan (Tauri v2 + vanilla JS): jam, tanggal, 1-4 Pin Sesi, running text fade.
 
 ## Prasyarat
 - Node.js 18+
@@ -33,8 +33,10 @@ src-tauri/capabilities      Permission window
 - Single/duplicate: signage fullscreen di monitor yang sama, control window disembunyikan lalu muncul lagi saat keluar.
 - Exit: tombol kanan atas (semi-transparan, solid saat mouse digerakkan) atau Esc.
 - Edit setting di control window saat signage tampil langsung ter-update (live) di mode extend.
+- Padding tepi layar dapat diatur dari bagian Tampilan dalam Setting.
+- Judul dan tombol Setting tetap terlihat saat halaman control digulir.
 
 ## Asumsi
 - Setting disimpan di localStorage WebView2 (bukan plugin store) agar dependency minimal.
-- Card dianggap terisi jika judul atau isi tidak kosong.
-- Ukuran font isi card diseragamkan antar card (mengikuti yang terkecil agar tidak overflow).
+- Pin Sesi dianggap terisi jika judul atau isi tidak kosong.
+- Ukuran font isi Pin Sesi diseragamkan antar Pin Sesi (mengikuti yang terkecil agar tidak overflow).
