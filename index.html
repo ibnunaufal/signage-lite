@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Signage Lite</title>
+  <title>Signage Pin Sesi</title>
   <link rel="stylesheet" href="/src/control.css" />
 </head>
 <body>
   <main id="app">
     <header class="app-header">
-      <h1>Signage Lite</h1>
+      <h1>Signage Pin Sesi</h1>
       <button id="settingsToggle" type="button" aria-label="Buka pengaturan" aria-expanded="false" aria-controls="settingSection">
         <span class="gear-icon" aria-hidden="true">⚙</span>
         <span class="settings-chevron" aria-hidden="true"></span>
@@ -19,7 +19,10 @@
 
     <div id="settingSection" hidden>
       <section class="settings-card">
-        <h2>Pengaturan</h2>
+        <h2>
+          <span>Pengaturan</span>
+          <button type="button" id="closeSettings" class="settings-close" aria-label="Tutup pengaturan" title="Tutup pengaturan">✕</button>
+        </h2>
         <details class="acc">
           <summary>Identitas</summary>
           <div class="acc-body">
@@ -106,7 +109,7 @@
     </div>
 
     <details class="acc">
-      <summary>Pin Sesi (1-4)</summary>
+      <summary>Pin Sesi (per instansi)</summary>
       <div class="acc-body">
         <div id="cards"></div>
         <button type="button" id="addCard">+ Tambah Pin Sesi</button>
@@ -127,11 +130,15 @@
         <div id="previewWrap"><iframe id="preview" src="/display.html?preview=1"></iframe></div>
       </div>
     </details>
+    <p class="app-credits"><span id="appVersion">Versi ...</span><span aria-hidden="true">·</span><a id="authorLink" href="https://naufall.com">naufall.com</a></p>
   </main>
 
   <footer>
     <p id="msg"></p>
-    <button type="button" id="show" class="primary">Tampilkan</button>
+    <div class="display-actions">
+      <button type="button" id="show" class="primary">Tampilkan</button>
+      <button type="button" id="hide" class="primary" hidden>Sembunyikan</button>
+    </div>
   </footer>
 
   <script type="module" src="/src/control.js"></script>

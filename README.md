@@ -1,4 +1,4 @@
-# Signage Lite
+# Signage Pin Sesi
 
 Aplikasi signage Windows ringan (Tauri v2 + vanilla JS): jam, tanggal, 1-4 Pin Sesi, running text fade.
 
@@ -30,7 +30,8 @@ src-tauri/capabilities      Permission window
 
 ## Perilaku
 - Extend (>1 monitor): signage fullscreen di monitor selain tempat control window; control window tetap tampil.
-- Single/duplicate: signage fullscreen di monitor yang sama, control window disembunyikan lalu muncul lagi saat keluar.
+- Single/duplicate: signage fullscreen di monitor yang sama; control window tetap berjalan dan dapat dipilih kembali dengan Alt+Tab.
+- Signage tidak selalu berada di atas aplikasi lain; tombol Tampilkan membawa signage ke depan, sedangkan Sembunyikan menutupnya.
 - Exit: tombol kanan atas (semi-transparan, solid saat mouse digerakkan) atau Esc.
 - Edit setting di control window saat signage tampil langsung ter-update (live) di mode extend.
 - Padding tepi layar dapat diatur dari bagian Tampilan dalam Setting.

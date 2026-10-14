@@ -1,4 +1,4 @@
-use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent};
+use tauri::{AppHandle, Emitter, Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent};
 
 #[cfg(windows)]
 #[link(name = "kernel32")]
@@ -20,7 +20,7 @@ fn keep_awake(on: bool) {
 
 /// Buka display window fullscreen.
 /// - Extend (>1 monitor): di monitor lain selain tempat control window berada.
-/// - Single/duplicate: di monitor yang sama, control window disembunyikan.
+/// - Single/duplicate: di monitor yang sama dengan control window.
 #[tauri::command]
 async fn open_display(app: AppHandle) -> Result<(), String> {
     if let Some(w) = app.get_webview_window("display") {
@@ -50,7 +50,6 @@ async fn open_display(app: AppHandle) -> Result<(), String> {
     let win = WebviewWindowBuilder::new(&app, "display", WebviewUrl::App("display.html".into()))
         .title("Signage")
         .decorations(false)
-        .always_on_top(true)
         .resizable(false)
         .visible(false)
         .build()
@@ -62,9 +61,6 @@ async fn open_display(app: AppHandle) -> Result<(), String> {
     win.show().map_err(|e| e.to_string())?;
     let _ = win.set_focus();
 
-    if !extended {
-        let _ = main.hide();
-    }
     let _ = app.run_on_main_thread(|| keep_awake(true));
     Ok(())
 }
@@ -80,10 +76,14 @@ async fn close_display(app: AppHandle) -> Result<(), String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![open_display, close_display])
         .on_window_event(|window, event| match event {
             WindowEvent::Destroyed if window.label() == "display" => {
                 keep_awake(false);
+                if let Err(e) = window.app_handle().emit("display-closed", ()) {
+                    eprintln!("Gagal memperbarui status tampilan: {e}");
+                }
                 if let Some(m) = window.app_handle().get_webview_window("main") {
                     let _ = m.show();
                     let _ = m.set_focus();
@@ -95,5 +95,5 @@ pub fn run() {
             _ => {}
         })
         .run(tauri::generate_context!())
-        .expect("error while running Signage Lite");
+        .expect("error while running Signage Pin Sesi");
 }

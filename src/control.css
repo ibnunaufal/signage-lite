@@ -5,12 +5,16 @@ body { margin:0; background:var(--bg); color:var(--tx); font:14px/1.4 "Segoe UI"
 .app-header { position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; margin:-16px -16px 12px; padding:12px 16px; background:var(--bg); }
 h1 { font-size:20px; margin:0; }
 #settingsToggle { margin-left:auto; display:flex; align-items:center; gap:8px; min-width:42px; justify-content:center; }
+#settingsToggle { background:#272719; border-color:#65572c; color:#f0d984; }
+#settingsToggle:hover:not(:disabled) { background:#3b3520; }
 .gear-icon { font-size:18px; line-height:1; }
 .settings-chevron { width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid currentColor; transition:transform .15s; }
 #settingsToggle[aria-expanded="true"] .settings-chevron { transform:rotate(180deg); }
 #settingSection { margin-bottom:12px; }
-.settings-card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:8px 10px 2px; }
-.settings-card h2 { margin:4px 2px 10px; font-size:16px; }
+.settings-card { background:#272719; border:1px solid #65572c; border-radius:10px; padding:8px 10px 2px; }
+.settings-card h2 { display:flex; align-items:center; justify-content:space-between; margin:4px 2px 10px; font-size:16px; }
+.settings-close { padding:3px 7px; color:#f0d984; border-color:#65572c; font-size:12px; line-height:1.2; }
+.settings-close:hover:not(:disabled) { background:#3b3520; }
 .settings-card .acc { background:transparent; }
 details.acc { background:var(--panel); border:1px solid var(--line); border-radius:8px; margin-bottom:12px; }
 details.acc > summary { display:flex; align-items:center; padding:12px; cursor:pointer; font-weight:600; list-style:none; }
@@ -37,11 +41,21 @@ button { background:#22305100; background:#223051; color:var(--tx); border:1px s
 button:hover:not(:disabled) { background:#2c3d66; }
 button:disabled { opacity:.4; cursor:default; }
 button.icon { padding:6px 9px; }
+button.icon.danger { color:#ff9a91; border-color:#70413f; background:#382526; }
+button.icon.danger:hover:not(:disabled) { background:#51302f; }
+button.icon.danger:disabled { color:#c17f79; }
 #logoPreview { height:36px; max-width:80px; object-fit:contain; background:#0d1426; border-radius:4px; }
 #logoFile { width:auto; flex:1; min-width:0; font-size:12px; }
 footer { position:fixed; left:0; right:0; bottom:0; padding:10px 16px 14px; background:var(--bg); border-top:1px solid var(--line); }
 #msg { margin:0 0 6px; min-height:1.2em; color:#ff8a80; font-size:13px; }
-button.primary { width:100%; padding:12px; font-size:16px; font-weight:700; background:var(--acc); color:#0b1220; border:0; }
+.app-credits { display:flex; justify-content:center; align-items:center; gap:6px; margin:0 0 16px; color:var(--mut); font-size:12px; }
+.app-credits a { color:#f0d984; text-decoration:none; }
+.app-credits a:hover { text-decoration:underline; }
+button.primary, button.outline { width:100%; padding:12px; font-size:16px; font-weight:700; }
+button.primary { background:var(--acc); color:#0b1220; border:0; }
 button.primary:hover:not(:disabled) { background:#ffe073; }
+.display-actions { display:flex; gap:8px; }
+button.outline { background:transparent; border:1px solid var(--acc); color:var(--acc); }
+button.outline:hover:not(:disabled) { background:#ffd23f1a; }
 #previewWrap { position:relative; width:100%; overflow:hidden; border:1px solid var(--line); border-radius:6px; background:#0b1220; }
 #preview { width:1280px; height:720px; border:0; transform-origin:top left; pointer-events:none; }

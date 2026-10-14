@@ -1,5 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
-import { emit } from '@tauri-apps/api/event';
+import { emit, listen } from '@tauri-apps/api/event';
+import { getVersion } from '@tauri-apps/api/app';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import { loadConfig, saveConfig, FONTS } from './common.js';
 
 const cfg = loadConfig();
@@ -10,6 +12,11 @@ $('#settingsToggle').addEventListener('click', () => {
   section.hidden = !section.hidden;
   $('#settingsToggle').setAttribute('aria-expanded', String(!section.hidden));
   $('#settingsToggle').setAttribute('aria-label', section.hidden ? 'Buka pengaturan' : 'Tutup pengaturan');
+});
+$('#closeSettings').addEventListener('click', () => {
+  $('#settingSection').hidden = true;
+  $('#settingsToggle').setAttribute('aria-expanded', 'false');
+  $('#settingsToggle').setAttribute('aria-label', 'Buka pengaturan');
 });
 
 // ---------- simpan otomatis + kirim live ke display ----------
@@ -92,10 +99,11 @@ function textInput(value, placeholder, onInput) {
   i.addEventListener('input', () => onInput(i.value));
   return i;
 }
-function iconBtn(txt, title, fn, disabled = false) {
+function iconBtn(txt, title, fn, disabled = false, variant = '') {
   const b = document.createElement('button');
   b.type = 'button';
   b.className = 'icon';
+  if (variant) b.classList.add(variant);
   b.textContent = txt;
   b.title = title;
   b.disabled = disabled;
@@ -121,11 +129,11 @@ function renderCards() {
     row.append(
       iconBtn('↑', 'Naik', () => { move(cfg.cards, i, -1); renderCards(); persist(); }, i === 0),
       iconBtn('↓', 'Turun', () => { move(cfg.cards, i, 1); renderCards(); persist(); }, i === last),
-      iconBtn('✕', 'Hapus Pin Sesi', () => { cfg.cards.splice(i, 1); renderCards(); persist(); }, cfg.cards.length <= 1),
+      iconBtn('✕', 'Hapus Pin Sesi', () => { cfg.cards.splice(i, 1); renderCards(); persist(); }, cfg.cards.length <= 1, 'danger'),
     );
     w.append(
-      textInput(c.title, `Pin Sesi ${i + 1} (Nama Instansi)`, (v) => { c.title = v; persist(); }),
-      textInput(c.body, 'Isi Pin Sesi, mis. PIN', (v) => { c.body = v; persist(); }),
+      textInput(c.title, `cth: Pin Sesi - Nama Instansi`, (v) => { c.title = v; persist(); }),
+      textInput(c.body, 'cth: 123456', (v) => { c.body = v; persist(); }),
       row,
     );
     box.append(w);
@@ -151,7 +159,7 @@ function renderTicker() {
       textInput(s, `Kalimat ${i + 1}`, (v) => { cfg.ticker[i] = v; persist(); }),
       iconBtn('↑', 'Naik', () => { move(cfg.ticker, i, -1); renderTicker(); persist(); }, i === 0),
       iconBtn('↓', 'Turun', () => { move(cfg.ticker, i, 1); renderTicker(); persist(); }, i === last),
-      iconBtn('✕', 'Hapus', () => { cfg.ticker.splice(i, 1); renderTicker(); persist(); }),
+      iconBtn('✕', 'Hapus', () => { cfg.ticker.splice(i, 1); renderTicker(); persist(); }, false, 'danger'),
     );
     box.append(row);
   });
@@ -204,6 +212,31 @@ $('#logoClear').onclick = () => { cfg.logo = ''; renderLogo(); persist(); };
 
 // ---------- tombol Tampilkan ----------
 const msg = $('#msg');
+const showButton = $('#show');
+const hideButton = $('#hide');
+getVersion()
+  .then((version) => { $('#appVersion').textContent = `Versi ${version}`; })
+  .catch((err) => {
+    $('#appVersion').textContent = 'Versi tidak tersedia';
+    console.error('Gagal memuat versi aplikasi:', err);
+  });
+$('#authorLink').addEventListener('click', async (e) => {
+  e.preventDefault();
+  try {
+    await openUrl('https://naufall.com');
+  } catch (err) {
+    msg.textContent = 'Gagal membuka situs author: ' + err;
+  }
+});
+
+function setDisplayActive(active) {
+  hideButton.hidden = !active;
+  showButton.classList.toggle('primary', !active);
+  showButton.classList.toggle('outline', active);
+}
+
+listen('display-closed', () => setDisplayActive(false)).catch(console.error);
+
 $('#show').onclick = async () => {
   msg.textContent = '';
   const filled = cfg.cards.filter((c) => c.title.trim() || c.body.trim());
@@ -215,8 +248,18 @@ $('#show').onclick = async () => {
   saveConfig(cfg);
   try {
     await invoke('open_display');
+    setDisplayActive(true);
   } catch (err) {
     msg.textContent = 'Gagal membuka tampilan: ' + err;
+  }
+};
+$('#hide').onclick = async () => {
+  msg.textContent = '';
+  try {
+    await invoke('close_display');
+    setDisplayActive(false);
+  } catch (err) {
+    msg.textContent = 'Gagal menyembunyikan tampilan: ' + err;
   }
 };
 

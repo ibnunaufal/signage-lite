@@ -3,5 +3,5 @@
   "identifier": "default",
   "description": "Permissions for control and display windows",
   "windows": ["main", "display"],
-  "permissions": ["core:default"]
+  "permissions": ["core:default", "core:app:allow-version", "opener:allow-open-url"]
 }
